@@ -44,16 +44,15 @@ public class TestBlock extends Block implements IForgeBlock
 				if (tileEntity instanceof TestTileEntity) {
 					NetworkHooks.openGui((ServerPlayerEntity) player, (TestTileEntity) tileEntity, pos);
 				}
-				return ActionResultType.SUCCESS;
 			}
 			if (player.getHeldItem(Hand.MAIN_HAND).equals(ItemStack.EMPTY, false))
 			{
 				player.sendMessage(new StringTextComponent("Is sky light substracted " + worldIn.getSkylightSubtracted()));
 				player.sendStatusMessage(new StringTextComponent("This is overlay message"), true);
-				return ActionResultType.SUCCESS;
 			}
+			
 		}
-		return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
+		return ActionResultType.SUCCESS;
 	}
 	
 	@Override

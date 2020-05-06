@@ -31,11 +31,8 @@ public class PineappleBlockItem extends BlockItem {
 
 	public PineappleBlockItem() {
 
-		super(new PineappleSaplingBlock(),
-				new Item.Properties().group(ItemGroup.FOOD)
-						.food(new Food.Builder().hunger(5).saturation(2)
-								.effect(() -> new EffectInstance(Effect.get(23), 20), 1f).fastToEat().setAlwaysEdible()
-								.build()));
+		super(new PineappleSaplingBlock(), new Item.Properties().group(ItemGroup.FOOD)
+				.food(new Food.Builder().hunger(5).saturation(2).fastToEat().setAlwaysEdible().build()));
 	}
 
 	@Override
