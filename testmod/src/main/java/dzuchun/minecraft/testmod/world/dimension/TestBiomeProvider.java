@@ -15,6 +15,7 @@ public class TestBiomeProvider extends BiomeProvider {
 			TestMod.TEST_BIOME_REGISTRY_OBJECT.get()
 			);
 
+	@SuppressWarnings("unused")
 	private final Random rand = new Random();
 	
 	public TestBiomeProvider() {

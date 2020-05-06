@@ -32,6 +32,7 @@ public class TestBlock extends Block implements IForgeBlock
 		// TODO Auto-generated constructor stub
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	public ActionResultType onBlockActivated (BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit)
 	{
@@ -68,7 +69,8 @@ public class TestBlock extends Block implements IForgeBlock
 		return new TestTileEntity();
 	}
 
-   public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+   @SuppressWarnings("deprecation")
+public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
       if (state.getBlock() != newState.getBlock()) {
          TileEntity tileentity = worldIn.getTileEntity(pos);
          if (tileentity instanceof IInventory) {

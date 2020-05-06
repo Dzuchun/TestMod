@@ -15,7 +15,8 @@ import net.minecraft.util.ActionResultType;
 
 public class ShawurmaBlockItem extends BlockItem{
 
-    private static final Logger LOGGER = LogManager.getLogger();
+    @SuppressWarnings("unused")
+	private static final Logger LOGGER = LogManager.getLogger();
 	
 	public ShawurmaBlockItem() {
 		super(ShawurmaBlock.getExample(),

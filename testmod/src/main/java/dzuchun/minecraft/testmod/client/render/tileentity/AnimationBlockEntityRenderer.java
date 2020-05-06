@@ -29,17 +29,18 @@ import net.minecraft.tileentity.BeaconTileEntity;
 import net.minecraftforge.client.model.data.EmptyModelData;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 
+@SuppressWarnings("deprecation")
 public class AnimationBlockEntityRenderer extends TileEntityRenderer<AnimationBlockEntity>{
 
     // Directly reference a log4j logger.
-    private static final Logger LOGGER = LogManager.getLogger();
+    @SuppressWarnings("unused")
+	private static final Logger LOGGER = LogManager.getLogger();
     
 	public AnimationBlockEntityRenderer(TileEntityRendererDispatcher rendererDispatcherIn) {
 		super(rendererDispatcherIn);
 		// TODO Auto-generated constructor stub
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void render(AnimationBlockEntity tileEntityIn, float partialTicks, MatrixStack matrixStackIn,
 			IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedOverlayIn) {

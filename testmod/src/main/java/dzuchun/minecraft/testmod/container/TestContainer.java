@@ -13,6 +13,7 @@ import net.minecraft.tileentity.TileEntity;
 public class TestContainer extends Container {
 
 	//private final IWorldPosCallable canInteractWithCallable;
+	@SuppressWarnings("unused")
 	private TestTileEntity tileEntity;
 	public TestContainer(int windowId, PlayerInventory inventory, TestTileEntity testTileEntity) {
 		super(TestMod.TEST_CONTAINER_TYPE_REGISTRY_OBJECT.get(), windowId);

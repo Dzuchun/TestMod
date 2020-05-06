@@ -27,6 +27,7 @@ public class TestChunkGenerator extends NoiseChunkGenerator<TestGenSettings>{
 	      this.depthNoise = new OctavesNoiseGenerator(this.randomSeed, 15, 0);
 	}
 	
+	@SuppressWarnings("unused")
 	protected void fillNoiseColumn(double[] noiseColumn, int noiseX, int noiseZ) {
 	      double d0 = (double)684.412F;
 	      double d1 = (double)684.412F;
@@ -37,7 +38,8 @@ public class TestChunkGenerator extends NoiseChunkGenerator<TestGenSettings>{
 	      this.calcNoiseColumn(noiseColumn, noiseX, noiseZ, (double)684.412F, (double)684.412F, 8.555149841308594D, 4.277574920654297D, 3, -10);
 	   }
 
-	   protected double func_222545_a(double p_222545_1_, double p_222545_3_, int p_222545_5_) {
+	   @SuppressWarnings("unused")
+	protected double func_222545_a(double p_222545_1_, double p_222545_3_, int p_222545_5_) {
 	      double d0 = 8.5D;
 	      double d1 = ((double)p_222545_5_ - (8.5D + p_222545_1_ * 8.5D / 8.0D * 4.0D)) * 12.0D * 128.0D / 256.0D / p_222545_3_;
 	      if (d1 < 0.0D) {
@@ -47,7 +49,8 @@ public class TestChunkGenerator extends NoiseChunkGenerator<TestGenSettings>{
 	      return d1;
 	   }
 
-	   protected double[] getBiomeNoiseColumn(int noiseX, int noiseZ) {
+	   @SuppressWarnings("unused")
+	protected double[] getBiomeNoiseColumn(int noiseX, int noiseZ) {
 	      double[] adouble = new double[2];
 	      float f = 0.0F;
 	      float f1 = 0.0F;

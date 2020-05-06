@@ -2,7 +2,6 @@ package dzuchun.minecraft.testmod.tileentity;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.swing.plaf.basic.BasicComboBoxUI.ItemHandler;
 
 import dzuchun.minecraft.testmod.TestMod;
 import dzuchun.minecraft.testmod.container.TestContainer;
@@ -11,14 +10,11 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.INBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.extensions.IForgeTileEntity;
-import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -29,7 +25,6 @@ public class TestTileEntity extends TileEntity implements INamedContainerProvide
 	private static final String INVENTORY_TAG = "inventory";
 
 	// Store the capability lazy optionals as fields to keep the amount of objects we use to a minimum
-	@SuppressWarnings("unused")
 	private final LazyOptional<IItemHandler> inventoryCapabilityExternal = LazyOptional.of(() -> this.inventory);
 	public final ItemStackHandler inventory = new ItemStackHandler(1) {
 		@Override

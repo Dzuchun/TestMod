@@ -26,6 +26,7 @@ import net.minecraft.world.World;
 public class PineappleBlockItem extends BlockItem {
 
 	// Directly reference a log4j logger.
+	@SuppressWarnings("unused")
 	private static final Logger LOGGER = LogManager.getLogger();
 
 	public PineappleBlockItem() {
@@ -47,6 +48,7 @@ public class PineappleBlockItem extends BlockItem {
 
 	private static EffectInstance effectInstace_;
 
+	@SuppressWarnings("resource")
 	@Override
 	public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entityLiving) {
 		if (!entityLiving.getEntityWorld().isRemote) {

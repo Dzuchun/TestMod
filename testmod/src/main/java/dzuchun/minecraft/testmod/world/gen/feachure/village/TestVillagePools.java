@@ -32,7 +32,7 @@ import net.minecraft.world.gen.feature.template.RuleStructureProcessor;
 import net.minecraft.world.gen.feature.template.StructureProcessor;
 import net.minecraft.world.gen.feature.template.TagMatchRuleTest;
 
-@SuppressWarnings({ "unchecked", "rawtypes", "deprecation" })
+@SuppressWarnings({"deprecation", "unused" })
 public class TestVillagePools {
     // Directly reference a log4j logger.
     private static final Logger LOGGER = LogManager.getLogger();

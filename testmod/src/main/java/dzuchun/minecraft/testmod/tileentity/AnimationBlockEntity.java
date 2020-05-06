@@ -2,7 +2,6 @@ package dzuchun.minecraft.testmod.tileentity;
 
 import dzuchun.minecraft.testmod.TestMod;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 

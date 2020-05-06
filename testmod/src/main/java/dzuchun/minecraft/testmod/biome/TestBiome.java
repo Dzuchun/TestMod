@@ -5,7 +5,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.GrassColors;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.blockstateprovider.SimpleBlockStateProvider;
@@ -13,12 +12,9 @@ import net.minecraft.world.gen.carver.CanyonWorldCarver;
 import net.minecraft.world.gen.carver.CaveWorldCarver;
 import net.minecraft.world.gen.feature.BlockStateFeatureConfig;
 import net.minecraft.world.gen.feature.BlockStateProvidingFeatureConfig;
-import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.LakesFeature;
 import net.minecraft.world.gen.feature.ProbabilityConfig;
-import net.minecraft.world.gen.feature.structure.VillageConfig;
 import net.minecraft.world.gen.placement.ChanceConfig;
-import net.minecraft.world.gen.placement.IPlacementConfig;
 import net.minecraft.world.gen.placement.Placement;
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder;
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilderConfig;
@@ -30,7 +26,7 @@ public class TestBiome extends Biome {
 	private static final BlockState LAVA = Blocks.LAVA.getDefaultState();
 
 	private static final int[] skyZvet = new int[] { 20, 20, 150 }; // RGB
-	private static final int[] fogZvet = new int[] { 200, 20, 50 }; // RGB
+//	private static final int[] fogZvet = new int[] { 200, 20, 50 }; // RGB
 	private static final int[] waterZvet = new int[] { 50, 50, 50 }; // RGB
 	private static final int[] waterFogZvet = new int[] { 100, 100, 100 }; // RGB
 	private static final int[] grassZvet = new int[] { 70, 70, 70 }; // RGB
