@@ -1,0 +1,9 @@
+
+
+{
+  "parent": "block/cube_column",
+  "textures": {
+    "end": "testmod:block/pineapple_log_top",
+    "side": "testmod:block/pineapple_log"
+  }
+}

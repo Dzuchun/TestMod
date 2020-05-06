@@ -1,0 +1,21 @@
+{
+	"type": "minecraft:chest",
+	"pools": [
+		{
+			"rolls": 100,
+			"bonus_rolls": 1,
+			"entries": [
+				{
+				"type": "item",
+				"name": "diamond",
+				"weight": 1
+				},
+				{
+				"type": "item",
+				"name": "testmod:shawurma",
+				"weight": 2
+				}
+			]
+		}
+	]
+}

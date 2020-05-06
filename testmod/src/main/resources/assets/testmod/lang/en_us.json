@@ -1,0 +1,13 @@
+{
+	"block.testmod.test_block": "Test Block",
+	"generator.testworld": "Test World",
+	"item.testmod.test_chestplate": "WINGS",
+	"item.testmod.shawurma": "Proffessor's shawurma",
+	"block.testmod.shawurma": "Proffessor's shawurma",
+	"itemGroup.testmod": "Test Mod Tab",
+	"biome.testmod.test_biome": "Test Biome",
+	"block.testmod.pineapple_sapling": "Pineapple",
+	"block.testmod.pineapple_log": "Pineapple wood",
+	"block.testmod.pineapple_leaves": "Pineapple leaves",
+	"block.minecraft.bed.cant_sleep_at_ludoland": "Can't sleep at ludoland"
+}

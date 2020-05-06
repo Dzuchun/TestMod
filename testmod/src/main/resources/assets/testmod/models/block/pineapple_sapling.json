@@ -1,0 +1,6 @@
+{
+  "parent": "block/cross",
+  "textures": {
+    "cross": "testmod:block/pineapple_sapling"
+  }
+}

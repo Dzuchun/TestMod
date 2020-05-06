@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=y": {
+      "model": "testmod:block/pineapple_log"
+    },
+    "axis=z": {
+      "model": "testmod:block/pineapple_log",
+      "x": 90
+    },
+    "axis=x": {
+      "model": "testmod:block/pineapple_log",
+      "x": 90,
+      "y": 90
+    }
+  }
+}

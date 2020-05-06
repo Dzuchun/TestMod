@@ -1,0 +1,25 @@
+{
+  "variants": {
+    "bites=0": {
+      "model": "testmod:block/shawurma_slice0"
+    },
+    "bites=1": {
+      "model": "testmod:block/shawurma_slice1"
+    },
+    "bites=2": {
+      "model": "testmod:block/shawurma_slice2"
+    },
+    "bites=3": {
+      "model": "testmod:block/shawurma_slice3"
+    },
+    "bites=4": {
+      "model": "testmod:block/shawurma_slice4"
+    },
+    "bites=5": {
+      "model": "testmod:block/shawurma_slice5"
+    },
+    "bites=6": {
+      "model": "testmod:block/shawurma_slice6"
+    }
+  }
+}
