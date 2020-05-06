@@ -23,6 +23,8 @@ run
 
 # Files from Forge MDK
 forge*changelog.txt
+LICENCE.txt
+README.txt
 
 #My pwn files
 tmp
