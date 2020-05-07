@@ -72,8 +72,8 @@ public class TestDimension extends Dimension {
 	@Override
 	public SleepResult canSleepAt(PlayerEntity player, BlockPos pos) {
 		// TODO handle creo chamber here
-		player.sendStatusMessage(new TranslationTextComponent("block.minecraft.bed.cant_sleep_at_ludoland"), true);
-		return SleepResult.DENY;
+		player.sendStatusMessage(new TranslationTextComponent("block.minecraft.bed.can_always_sleep_at_ludoland"), true);
+		return SleepResult.ALLOW;
 	}
 
 	@Override
