@@ -1,0 +1,10 @@
+{
+  "homepage": "https://github.com/Dzuchun/TestMod/tree/master/testmod",
+  "1.15.2": {
+    "0.0.0.1": "Added complimrtgnke_al player render" 
+  },
+  "promos": {
+    "1.15.2": "0.0.0.1",
+    "1.15": "0.0.0.1"
+  }
+}
