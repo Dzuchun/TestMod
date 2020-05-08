@@ -67,6 +67,7 @@ import dzuchun.minecraft.testmod.container.TestContainer;
 import dzuchun.minecraft.testmod.entity.passive.BarkingBucketEntity;
 import dzuchun.minecraft.testmod.entity.passive.ProfessorEntity;
 import dzuchun.minecraft.testmod.item.TestItem;
+import dzuchun.minecraft.testmod.net.TestModPacketHandler;
 import dzuchun.minecraft.testmod.tileentity.AnimationBlockEntity;
 import dzuchun.minecraft.testmod.tileentity.TestTileEntity;
 import dzuchun.minecraft.testmod.world.dimension.TestModDimension;
@@ -285,8 +286,9 @@ public class TestMod
 	@SubscribeEvent
     public static void commonSetup(final FMLCommonSetupEvent event)
     {
-    	
     	DeferredWorkQueue.runLater( ()-> setupWorldGen());
+    	
+    	TestModPacketHandler.init();
     }
     
     @SubscribeEvent

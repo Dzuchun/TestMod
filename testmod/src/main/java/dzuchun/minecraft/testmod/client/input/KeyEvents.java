@@ -8,6 +8,8 @@ import org.apache.logging.log4j.Logger;
 
 import dzuchun.minecraft.testmod.TestMod;
 import dzuchun.minecraft.testmod.client.gui.overlay.ManaBarRenderer;
+import dzuchun.minecraft.testmod.net.LeapMessage;
+import dzuchun.minecraft.testmod.net.TestModPacketHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.settings.KeyBinding;
@@ -16,6 +18,7 @@ import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.settings.KeyConflictContext;
 import net.minecraftforge.client.settings.KeyModifier;
@@ -23,6 +26,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 
+@OnlyIn(Dist.CLIENT)
 @Mod.EventBusSubscriber(modid = TestMod.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class KeyEvents {
 	private static final Logger LOGGER = LogManager.getLogger();
@@ -97,7 +101,8 @@ public class KeyEvents {
 		if (keyBindings.get(KeyName.LEAP).isPressed()) {
 			Minecraft.getInstance().player.sendStatusMessage(new TranslationTextComponent("wings.leap")
 					.setStyle(new Style().setColor(TextFormatting.GOLD).setBold(true)), true);
-			//TODO perform leap
+			Minecraft.getInstance().player.fallDistance = 0;
+			TestModPacketHandler.INSTANCE.sendToServer(new LeapMessage());
 		}
 	}
 }
