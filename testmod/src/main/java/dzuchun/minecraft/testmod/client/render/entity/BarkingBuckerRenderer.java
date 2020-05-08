@@ -42,6 +42,7 @@ public class BarkingBuckerRenderer extends EntityRenderer<BarkingBucketEntity>{
 		TextureAtlasSprite spriteSide = Minecraft.getInstance().getAtlasSpriteGetter(PlayerContainer.LOCATION_BLOCKS_TEXTURE).apply(TestMod.BUCKET_SIDE);
 		TextureAtlasSprite spriteBottom = Minecraft.getInstance().getAtlasSpriteGetter(PlayerContainer.LOCATION_BLOCKS_TEXTURE).apply(TestMod.BUCKET_BOTTOM);
 		TextureAtlasSprite spriteTears = Minecraft.getInstance().getAtlasSpriteGetter(PlayerContainer.LOCATION_BLOCKS_TEXTURE).apply(TestMod.BUCKET_TEARS);
+		
 		IVertexBuilder renderer = bufferIn.getBuffer(RenderType.getTranslucent());
 		
 		matrixStackIn.push();

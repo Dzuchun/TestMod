@@ -97,7 +97,9 @@ public class WingsRenderer {
 
 	private static MatrixStack matrixStack;
 	private static ClientPlayerEntity player1;
-	private static BufferBuilder bufferBuilder = Tessellator.getInstance().getBuffer();
+	
+	private static Tessellator tesselator = Tessellator.getInstance();
+	private static BufferBuilder bufferBuilder = tesselator.getBuffer();
 
 	@SuppressWarnings("resource")
 	@OnlyIn(Dist.CLIENT)
@@ -114,8 +116,9 @@ public class WingsRenderer {
 //			bufferBuilder.color(1f, 1f, 1f, 0.5f);
 //			bufferBuilder.setDefaultColor(127, 127, 127, 127);
 			renderWings(bufferBuilder, matrixStack);
-			bufferBuilder.finishDrawing();
-			WorldVertexBufferUploader.draw(bufferBuilder);
+//			bufferBuilder.finishDrawing();
+//			WorldVertexBufferUploader.draw(bufferBuilder);
+			tesselator.draw();
 			matrixStack.pop();
 		}
 	}

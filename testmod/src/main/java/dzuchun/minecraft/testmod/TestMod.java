@@ -41,7 +41,6 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fml.loading.moddiscovery.ModInfo;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -101,6 +100,8 @@ public class TestMod
     public static ResourceLocation BUCKET_SIDE = new ResourceLocation(MODID, "block/barking_bucket_side");
     public static ResourceLocation BUCKET_BOTTOM = new ResourceLocation(MODID, "block/barking_bucket_bottom");
     public static ResourceLocation BUCKET_TEARS = new ResourceLocation(MODID, "block/barking_bucket_tears");
+    
+    public static ResourceLocation MANA_BAR = new ResourceLocation(MODID, "gui/ingame/energy_bar");
     
     public static ResourceLocation PROFESSOR_TEXTURE = new ResourceLocation(MODID, "textures/entity/professor_entity.png");
     public static Block TEST_BLOCK;
@@ -301,6 +302,8 @@ public class TestMod
     	event.addSprite(BUCKET_FRONT);
     	event.addSprite(BUCKET_SIDE);
     	event.addSprite(BUCKET_TEARS);
+    	
+    	event.addSprite(MANA_BAR);
     }
 
 //    public void registerBlocks(final RegistryEvent.Register<Block> blockRegistryEvent) {
