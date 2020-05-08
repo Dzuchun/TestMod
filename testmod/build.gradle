@@ -13,7 +13,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '0.1'
+version = '0.0.0.1'
 group = 'dzuchun.minecraft.testmod' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'Test-Mod'
 
@@ -74,7 +74,7 @@ minecraft {
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
 
-            args '--mod', 'examplemod', '--all', '--output', file('src/generated/resources/')
+            args '--mod', 'testmod', '--all', '--output', file('src/generated/resources/')
 
             mods {
                 testmod {
