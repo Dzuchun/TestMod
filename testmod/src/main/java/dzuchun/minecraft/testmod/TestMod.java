@@ -41,6 +41,7 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.moddiscovery.ModInfo;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -56,6 +57,7 @@ import dzuchun.minecraft.testmod.blockitem.PineappleLeavesBlockItem;
 import dzuchun.minecraft.testmod.blockitem.PineappleLogBlockItem;
 import dzuchun.minecraft.testmod.blockitem.ShawurmaBlockItem;
 import dzuchun.minecraft.testmod.client.gui.TestScreen;
+import dzuchun.minecraft.testmod.client.input.KeyEvents;
 import dzuchun.minecraft.testmod.client.render.entity.BarkingBuckerRenderer;
 import dzuchun.minecraft.testmod.client.render.entity.ProfessorRenderer;
 import dzuchun.minecraft.testmod.client.render.tileentity.AnimationBlockEntityRenderer;
@@ -273,6 +275,8 @@ public class TestMod
 		
 		LOGGER.info("Registering screen");
 		ScreenManager.registerFactory(TEST_CONTAINER_TYPE_REGISTRY_OBJECT.get(), TestScreen::new);
+		
+		KeyEvents.init();
     }
     
 	@SubscribeEvent
@@ -358,6 +362,23 @@ public class TestMod
         biome.addStructure(structure.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG));
         biome.addFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, structure.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Placement.NOPE.configure(IPlacementConfig.NO_PLACEMENT_CONFIG)));
     }
+    
+    /**
+     * 
+     * @author TehNut
+     *
+     */
+//    private static class TestModInfo extends ModInfo {
+//        public TestModInfo(ModInfo modInfo) {
+//        	
+//            super(modInfo.getOwningFile(), modInfo.getModConfig());
+//        }
+//
+//        @Override
+//        public boolean hasConfigUI() {
+//            return true;
+//        }
+//    }
 }
 
 
