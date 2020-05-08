@@ -1,7 +1,9 @@
 package dzuchun.minecraft.testmod;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.client.renderer.texture.TextureAtlasSpriteStitcher;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.container.ContainerType;
@@ -101,7 +103,7 @@ public class TestMod
     public static ResourceLocation BUCKET_BOTTOM = new ResourceLocation(MODID, "block/barking_bucket_bottom");
     public static ResourceLocation BUCKET_TEARS = new ResourceLocation(MODID, "block/barking_bucket_tears");
     
-    public static ResourceLocation MANA_BAR = new ResourceLocation(MODID, "gui/ingame/energy_bar");
+    public static ResourceLocation MANA_BAR = new ResourceLocation(MODID, "textures/gui/ingame/energy_bar.png");
     
     public static ResourceLocation PROFESSOR_TEXTURE = new ResourceLocation(MODID, "textures/entity/professor_entity.png");
     public static Block TEST_BLOCK;
@@ -288,22 +290,25 @@ public class TestMod
     }
     
     @SubscribeEvent
-    public static void onTextureStitch(TextureStitchEvent.Pre event)
+    public static void onTextureStitchPre(TextureStitchEvent.Pre event)
     {
-    	if (!event.getMap().getTextureLocation().equals(PlayerContainer.LOCATION_BLOCKS_TEXTURE))
-    	{
-    		return;
-    	}
-
     	LOGGER.info("Adding sprite to atlas");
-    	event.addSprite(ANIMATION_SPRITE);
+    	if (event.getMap().getTextureLocation().equals(PlayerContainer.LOCATION_BLOCKS_TEXTURE))
+    	{
+
+        	event.addSprite(ANIMATION_SPRITE);
+        	
+        	event.addSprite(BUCKET_BOTTOM);
+        	event.addSprite(BUCKET_FRONT);
+        	event.addSprite(BUCKET_SIDE);
+        	event.addSprite(BUCKET_TEARS);
+    		LOGGER.info("Adding manabar sprite");
+        	event.addSprite(MANA_BAR);
+        	
+    	}
     	
-    	event.addSprite(BUCKET_BOTTOM);
-    	event.addSprite(BUCKET_FRONT);
-    	event.addSprite(BUCKET_SIDE);
-    	event.addSprite(BUCKET_TEARS);
-    	
-    	event.addSprite(MANA_BAR);
+    	if (event.getMap().getTextureLocation().equals(AbstractGui.GUI_ICONS_LOCATION)) {
+    	}
     }
 
 //    public void registerBlocks(final RegistryEvent.Register<Block> blockRegistryEvent) {

@@ -10,6 +10,11 @@
 	"block.testmod.pineapple_log": "Pineapple wood",
 	"block.testmod.pineapple_leaves": "Pineapple leaves",
 	"block.minecraft.bed.can_always_sleep_at_ludoland": "YOU CAN ALWAYS SLEEP AT LUDOLAAAAAAND!!!1!1",
-	"key.testmod.summon_wings": "summon wings",
-	"wings.summoned": "Wings summoned!"
+	"key.testmod.summon_wings": "Summon wings",
+	"wings.summoned": "Wings summoned!",
+	"wings.mana": "Current mana",
+	"key.testmod.modify_max_mana": "Modify max mana",
+	"key.testmod.modify_current_mana": "Modify current mana",
+	"key.testmod.leap": "Leap",
+	"wings.leap": "Leap!!!"
 }
