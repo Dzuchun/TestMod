@@ -39,7 +39,7 @@ public class SmashLogic {
 
 	@SubscribeEvent
 	public static void processSmashLogic(TickEvent.ServerTickEvent event) {
-		LOGGER.info("Processing smash logic");
+//		LOGGER.info("Processing smash logic");
 
 		synchronized (processesLock) {
 			for (SmashLogic instance : processes.values()) {
