@@ -16,5 +16,7 @@
 	"key.testmod.modify_max_mana": "Modify max mana",
 	"key.testmod.modify_current_mana": "Modify current mana",
 	"key.testmod.leap": "Leap",
-	"wings.leap": "Leap!!!"
+	"wings.leap": "Leap!!!",
+	"key.testmod.smash": "Smash",
+	"wings.smash": "Smash!!!"
 }

@@ -28,6 +28,8 @@ import net.minecraft.world.gen.feature.structure.IStructurePieceType;
 import net.minecraft.world.gen.feature.structure.Structure;
 import net.minecraft.world.gen.placement.IPlacementConfig;
 import net.minecraft.world.gen.placement.Placement;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.ModDimension;
@@ -42,6 +44,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -68,6 +71,7 @@ import dzuchun.minecraft.testmod.entity.passive.BarkingBucketEntity;
 import dzuchun.minecraft.testmod.entity.passive.ProfessorEntity;
 import dzuchun.minecraft.testmod.item.TestItem;
 import dzuchun.minecraft.testmod.net.TestModPacketHandler;
+import dzuchun.minecraft.testmod.server.SmashLogic;
 import dzuchun.minecraft.testmod.tileentity.AnimationBlockEntity;
 import dzuchun.minecraft.testmod.tileentity.TestTileEntity;
 import dzuchun.minecraft.testmod.world.dimension.TestModDimension;
@@ -290,6 +294,11 @@ public class TestMod
     	
     	TestModPacketHandler.init();
     }
+	
+	@SubscribeEvent
+	public static void serverStartup(FMLServerStartingEvent event) {
+		SmashLogic.init();
+	}
     
     @SubscribeEvent
     public static void onTextureStitchPre(TextureStitchEvent.Pre event)

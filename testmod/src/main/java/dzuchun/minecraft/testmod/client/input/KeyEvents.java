@@ -9,6 +9,7 @@ import org.apache.logging.log4j.Logger;
 import dzuchun.minecraft.testmod.TestMod;
 import dzuchun.minecraft.testmod.client.gui.overlay.ManaBarRenderer;
 import dzuchun.minecraft.testmod.net.LeapMessage;
+import dzuchun.minecraft.testmod.net.SmashMessage;
 import dzuchun.minecraft.testmod.net.TestModPacketHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
@@ -32,7 +33,7 @@ public class KeyEvents {
 	private static final Logger LOGGER = LogManager.getLogger();
 
 	private static enum KeyName {
-		SUMMON_WINGS, MODIFY_MAX_MANA, MODIFY_CURRENT_MANA, LEAP
+		SUMMON_WINGS, MODIFY_MAX_MANA, MODIFY_CURRENT_MANA, LEAP, SMASH
 	}
 
 	private static final LinkedHashMap<KeyName, KeyBinding> keyBindings = new LinkedHashMap<KeyName, KeyBinding>() {
@@ -50,6 +51,10 @@ public class KeyEvents {
 			
 			this.put(KeyName.LEAP,
 					new KeyBinding("key.testmod.leap", KeyConflictContext.IN_GAME, KeyModifier.NONE,
+							InputMappings.Type.KEYSYM.getOrMakeInput(KeyEvent.VK_Z), "Test Mod"));
+			
+			this.put(KeyName.SMASH,
+					new KeyBinding("key.testmod.smash", KeyConflictContext.IN_GAME, KeyModifier.NONE,
 							InputMappings.Type.KEYSYM.getOrMakeInput(KeyEvent.VK_Z), "Test Mod"));
 		}
 	};
@@ -101,8 +106,13 @@ public class KeyEvents {
 		if (keyBindings.get(KeyName.LEAP).isPressed()) {
 			Minecraft.getInstance().player.sendStatusMessage(new TranslationTextComponent("wings.leap")
 					.setStyle(new Style().setColor(TextFormatting.GOLD).setBold(true)), true);
-			Minecraft.getInstance().player.fallDistance = 0;
-			TestModPacketHandler.INSTANCE.sendToServer(new LeapMessage());
+			TestModPacketHandler.INSTANCE.sendToServer(new LeapMessage(0f, 0.2f, 0f));
+		}
+		
+		if (keyBindings.get(KeyName.SMASH).isPressed()) {
+			Minecraft.getInstance().player.sendStatusMessage(new TranslationTextComponent("wings.smash")
+					.setStyle(new Style().setColor(TextFormatting.RED).setBold(true)), true);
+			TestModPacketHandler.INSTANCE.sendToServer(SmashMessage.create(Minecraft.getInstance().player.getForward(), 1d, 2d));
 		}
 	}
 }
