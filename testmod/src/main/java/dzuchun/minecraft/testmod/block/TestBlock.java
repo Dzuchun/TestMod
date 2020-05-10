@@ -32,7 +32,6 @@ public class TestBlock extends Block implements IForgeBlock
 		// TODO Auto-generated constructor stub
 	}
 	
-	@SuppressWarnings("deprecation")
 	@Override
 	public ActionResultType onBlockActivated (BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit)
 	{

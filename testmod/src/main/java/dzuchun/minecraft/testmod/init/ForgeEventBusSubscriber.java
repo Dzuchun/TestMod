@@ -1,7 +1,6 @@
 package dzuchun.minecraft.testmod.init;
 
 import dzuchun.minecraft.testmod.TestMod;
-import dzuchun.minecraft.testmod.client.render.misc.WingsRenderer;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;

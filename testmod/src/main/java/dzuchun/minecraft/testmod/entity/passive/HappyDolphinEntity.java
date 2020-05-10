@@ -9,6 +9,7 @@ import java.util.Set;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.command.arguments.EntityAnchorArgument;
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.EntityType;
@@ -32,11 +33,12 @@ import net.minecraft.world.World;
 public class HappyDolphinEntity extends AnimalEntity implements IFlyingAnimal {
 
 	private static final Vec3d WANDER_RADIUS = new Vec3d(5, 5, 5);
-	private static final Vec3d EAT_RADIUS = new Vec3d(5, 5, 5);
+	private static final Vec3d EAT_RADIUS = new Vec3d(2, 20, 2);
 	private static final BlockState EAT_TARGET = Blocks.DANDELION.getDefaultState();
 	private static final BlockState EAT_RESULT = Blocks.AIR.getDefaultState();
 	private static final int EAT_TIMER = 40;
 	private static final IParticleData PARTICLE = new BlockParticleData(ParticleTypes.BLOCK, EAT_TARGET);
+	private static final int HUNGER_FOFCE = 30;
 
 	// TODO move this to util
 	private static int tmp_counter1, tmp_counter2, tmp_counter3;
@@ -86,13 +88,25 @@ public class HappyDolphinEntity extends AnimalEntity implements IFlyingAnimal {
 		}
 		return (E) tmp_iterator.next();
 	}
+	
+	private static int tmp_counter5;
+	private static BlockPos tmp_blockPos1;
+	//TODO move to util
+	private synchronized static int getHeightOverSurface(World world, BlockPos pos) {
+		tmp_counter5=0;
+		tmp_blockPos1 = pos.down(tmp_counter5);
+		while(world.getBlockState(tmp_blockPos1).equals(Blocks.AIR.getDefaultState())) {
+			tmp_counter5++;
+			tmp_blockPos1 = pos.down(tmp_counter5);
+		}
+		return tmp_counter5;
+	}
 
 	public HappyDolphinEntity(EntityType<HappyDolphinEntity> entityType, World world) {
 		super(entityType, world);
 		this.setAIMoveSpeed(0.5f);
 		this.moveController = new FlyingMovementController(this, 5, true);
 	}
-
 	@Override
 	/**
 	 * Returns new PathNavigateGround instance
@@ -123,11 +137,11 @@ public class HappyDolphinEntity extends AnimalEntity implements IFlyingAnimal {
 
 	@Override
 	protected void registerGoals() {
-//		super.registerGoals();
+		super.registerGoals();
 		this.goalSelector.addGoal(1, new HappyDolphinEntity.WanderGoal());
 		this.goalSelector.addGoal(1, new HappyDolphinEntity.EatFlowerGoal(this));
 
-//		this.goalSelector.addGoal(2, new RandomWalkingGoal(this, getAIMoveSpeed()));
+//		this.goalSelector.addGoal(2, new WaterAvoidingRandomFlyingGoal(this, getAIMoveSpeed()));
 	}
 
 	@Override
@@ -144,7 +158,19 @@ public class HappyDolphinEntity extends AnimalEntity implements IFlyingAnimal {
 		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double) 0.3F);
 	}
 
+	private int hunger = 0;
+	
+	@Override
+	public void livingTick() {
+		super.livingTick();
+		if (this.fallDistance != 0) {
+			this.fallDistance=0;
+		}
+		hunger++;
+	}
+	
 //*****       GOALS       *****
+	
 	class EatFlowerGoal extends Goal {
 
 		private LivingEntity entity;
@@ -201,7 +227,7 @@ public class HappyDolphinEntity extends AnimalEntity implements IFlyingAnimal {
 			target = getRandomElement(findBlockPositionIn(entity.world,
 					new AxisAlignedBB(pos.add(EAT_RADIUS.scale(-1)), pos.add(EAT_RADIUS)), EAT_TARGET));
 			reachedTarget = false;
-			if (!HappyDolphinEntity.this.getNavigator().tryMoveToXYZ(target.getX() + 0.5, target.getY() + 0.5,
+			if (!HappyDolphinEntity.this.getNavigator().tryMoveToXYZ(target.getX() + 0.5, target.getY() + 0.7,
 					target.getZ() + 0.5, entity.getAIMoveSpeed())) {
 				// Failed to execute
 				LOGGER.info("Start executing failed");
@@ -254,7 +280,8 @@ public class HappyDolphinEntity extends AnimalEntity implements IFlyingAnimal {
 					// Reached target
 					reachedTarget = true;
 					HappyDolphinEntity.this.getNavigator().clearPath();
-					entity.rotateTowards(entity.rotationYaw, 90);
+//					entity.rotateTowards(entity.rotationYaw, 90);
+					entity.lookAt(EntityAnchorArgument.Type.EYES, new Vec3d(target.getX(), target.getY(), target.getZ()));
 				} else {
 					LOGGER.info("Going to target, target distance square "
 							+ entity.getDistanceSq(target.getX() + 0.5, target.getY() + 0.5, target.getZ() + 0.5));
@@ -274,6 +301,7 @@ public class HappyDolphinEntity extends AnimalEntity implements IFlyingAnimal {
 				return;
 			}
 			if (eatTimer > 0) {
+				entity.lookAt(EntityAnchorArgument.Type.EYES, new Vec3d(target.getX(), target.getY(), target.getZ()));
 				eatTimer--;
 				world.addParticle(ParticleTypes.CRIT, target.getX() + 0.5, target.getY() + 0.5, target.getZ() + 0.5,
 						tmp_rand.nextDouble() - 0.5, tmp_rand.nextDouble() - 0.5, tmp_rand.nextDouble() - 0.5);
@@ -281,6 +309,7 @@ public class HappyDolphinEntity extends AnimalEntity implements IFlyingAnimal {
 			} else {
 				world.setBlockState(target, EAT_RESULT);
 				notExecuting = true;
+				hunger =0 ;
 				LOGGER.info("Target was eaten! Yummy!");
 			}
 		}
@@ -294,52 +323,66 @@ public class HappyDolphinEntity extends AnimalEntity implements IFlyingAnimal {
 		private boolean inProgress = false;
 		private BlockPos target;
 
+		public WanderGoal () {
+			this.setMutexFlags(EnumSet.of(Goal.Flag.MOVE));
+		}
+		
 		@Override
 		public boolean shouldExecute() {
+			LOGGER.info("Should execute wander returned " + (HappyDolphinEntity.this.getNavigator().noPath() && !isBusy));
 			return HappyDolphinEntity.this.getNavigator().noPath() && !isBusy;
 		}
 
 		@Override
 		public boolean shouldContinueExecuting() {
-			return !HappyDolphinEntity.this.getNavigator().noPath() && inProgress;
+			LOGGER.info("Should continue execute wander returned " + !(HappyDolphinEntity.this.getNavigator().noPath() || target.withinDistance(HappyDolphinEntity.this.getPositionVector(), 0.4d)));
+			return !(HappyDolphinEntity.this.getNavigator().noPath() || target.withinDistance(HappyDolphinEntity.this.getPositionVector(), 0.4d));
 		}
 
 		private Set<BlockPos> tmp_set;
 
 		@Override
 		public void startExecuting() {
+			LOGGER.info("Starting wander goal");
 			super.startExecuting();
 			tmp_set = findBlockPositionIn(world,
 					new AxisAlignedBB(HappyDolphinEntity.this.getPositionVector().add(WANDER_RADIUS.scale(-1)),
-							HappyDolphinEntity.this.getPositionVector().add(WANDER_RADIUS)),
+							HappyDolphinEntity.this.getPositionVector().add(WANDER_RADIUS)).expand(0, -hunger/HUNGER_FOFCE, 0),
 					Blocks.AIR.getDefaultState());
+			
+//			target = new BlockPos(RandomPositionGenerator.findRandomTarget(HappyDolphinEntity.this, 5, 2));
+			
+//			getHeightOverSurface(world, target);
+			
 			if (tmp_set.isEmpty()) {
 				return;
 			}
 			target = getRandomElement(tmp_set);
-			if (HappyDolphinEntity.this.getNavigator().tryMoveToXYZ(target.getX() + 0.5, target.getY() + 0.5,
+			HappyDolphinEntity.this.setAIMoveSpeed(0.7f);
+			if (HappyDolphinEntity.this.getNavigator().tryMoveToXYZ(target.getX() + 0.5, target.getY() + 0.7,
 					target.getZ() + 0.5, getAIMoveSpeed())) {
 				inProgress = true;
 				isBusy = true;
 			}
 		}
-
-		@Override
-		public void tick() {
-			super.tick();
-			if (target.withinDistance(HappyDolphinEntity.this.getPositionVector(), 0.4d)) {
-				inProgress = false;
-			} else {
-				if (HappyDolphinEntity.this.getNavigator().noPath() && inProgress) {
-					HappyDolphinEntity.this.setAIMoveSpeed(0.7f);
-					HappyDolphinEntity.this.getNavigator().tryMoveToXYZ(target.getX(), target.getY(), target.getZ(),
-							getAIMoveSpeed());
-				}
-			}
-		}
+		
+//		@Override
+//		public void tick() {
+//			super.tick();
+//			if (target.withinDistance(HappyDolphinEntity.this.getPositionVector(), 0.4d)) {
+//				inProgress = false;
+//			} else {
+//				if (HappyDolphinEntity.this.getNavigator().noPath() && inProgress) {
+//					HappyDolphinEntity.this.setAIMoveSpeed(0.7f);
+//					HappyDolphinEntity.this.getNavigator().tryMoveToXYZ(target.getX(), target.getY(), target.getZ(),
+//							getAIMoveSpeed());
+//				}
+//			}
+//		}
 
 		@Override
 		public void resetTask() {
+			LOGGER.info("Clearing wander goal");
 			super.resetTask();
 			inProgress = false;
 			HappyDolphinEntity.this.getNavigator().clearPath();

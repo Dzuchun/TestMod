@@ -5,7 +5,6 @@ import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.passive.DolphinEntity;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.PlayerContainer;
 import net.minecraft.item.ArmorItem;
@@ -111,10 +110,10 @@ public class TestMod {
 
 	public static ResourceLocation PROFESSOR_TEXTURE = new ResourceLocation(MODID,
 			"textures/entity/professor_entity.png");
-	
+
 	public static ResourceLocation HAPPY_DOLPHIN_TEXTURE = new ResourceLocation(MODID,
 			"textures/entity/happy_dolphin.png");
-	
+
 	public static Block TEST_BLOCK;
 
 	public static BlockItem PINEAPPLE_LOG = new PineappleLogBlockItem();
@@ -126,19 +125,19 @@ public class TestMod {
 	public static RegistryObject<EntityType<ProfessorEntity>> PROFESSOR_ENTITY_TYPE_REGISTRY_OBJECT;
 	public static RegistryObject<EntityType<BarkingBucketEntity>> BARKING_BUCKET_ENTITY_TYPE_REGISTRY_OBJECT;
 	public static RegistryObject<EntityType<HappyDolphinEntity>> HAPPY_DOLPHIN_ENTITY_TYPE_REGISTRY_OBJECT;
-	
+
 	public static RegistryObject<ModDimension> TEST_DIMENSION_TYPE_REGISTRY_OBJECT;
 	public static BlockItem TEST_BLOCK_BLOCK_ITEM;
 	public static WorldType TEST_WORLD_TYPE = new TestWorldType();
 	public static ArmorItem TEST_CHESTPLATE = new TestItem();
 	public static AnimationBlock ANIMATION_BLOCK = new AnimationBlock();
 	public static BlockItem SHAWURMA;
-	
+
 	public static EntityType<BarkingBucketEntity> BARKING_BUCKET_ENTITY_TYPE = EntityType.Builder
 			.<BarkingBucketEntity>create(BarkingBucketEntity::new, EntityClassification.CREATURE)
 			.size(EntityType.WOLF.getWidth(), EntityType.WOLF.getHeight())
 			.build(new ResourceLocation(MODID, "barking_bucket_entity").toString());
-	
+
 	public static EntityType<HappyDolphinEntity> HAPPY_DOLPHIN_ENTITY_TYPE = EntityType.Builder
 			.<HappyDolphinEntity>create(HappyDolphinEntity::new, EntityClassification.WATER_CREATURE)
 			.size(EntityType.DOLPHIN.getWidth(), EntityType.DOLPHIN.getHeight())
@@ -229,10 +228,10 @@ public class TestMod {
 				() -> EntityType.Builder.<ProfessorEntity>create(ProfessorEntity::new, EntityClassification.CREATURE)
 						.size(EntityType.PIG.getWidth(), EntityType.PIG.getHeight())
 						.build(new ResourceLocation(MODID, "professor_entity").toString()));
-		
+
 		BARKING_BUCKET_ENTITY_TYPE_REGISTRY_OBJECT = ENTITY_TYPES.register("barking_bucket_entity",
 				() -> BARKING_BUCKET_ENTITY_TYPE);
-		
+
 		HAPPY_DOLPHIN_ENTITY_TYPE_REGISTRY_OBJECT = ENTITY_TYPES.register("happy_dolphin_entity",
 				() -> HAPPY_DOLPHIN_ENTITY_TYPE);
 //    	ForgeRegistries.ENTITIES.register(BARKING_BUCKET_ENTITY_TYPE);
@@ -291,10 +290,10 @@ public class TestMod {
 		LOGGER.debug("Registering Entity Renderers");
 		RenderingRegistry.registerEntityRenderingHandler(PROFESSOR_ENTITY_TYPE_REGISTRY_OBJECT.get(),
 				ProfessorRenderer::new);
-		
+
 		RenderingRegistry.registerEntityRenderingHandler(BARKING_BUCKET_ENTITY_TYPE_REGISTRY_OBJECT.get(),
 				BarkingBuckerRenderer::new);
-		
+
 		RenderingRegistry.registerEntityRenderingHandler(HAPPY_DOLPHIN_ENTITY_TYPE_REGISTRY_OBJECT.get(),
 				HappyDolphinEntityRenderer::new);
 
