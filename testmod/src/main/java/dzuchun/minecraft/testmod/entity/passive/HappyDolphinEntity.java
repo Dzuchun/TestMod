@@ -171,6 +171,7 @@ public class HappyDolphinEntity extends AnimalEntity implements IFlyingAnimal {
 	
 //*****       GOALS       *****
 	
+	private boolean justAte = false;
 	class EatFlowerGoal extends Goal {
 
 		private LivingEntity entity;
@@ -200,6 +201,7 @@ public class HappyDolphinEntity extends AnimalEntity implements IFlyingAnimal {
 			if (findBlockPositionIn(entity.world, new AxisAlignedBB(pos.add(EAT_RADIUS.scale(-1)), pos.add(EAT_RADIUS)),
 					EAT_TARGET).isEmpty()) {
 				LOGGER.info("Should execute returned false");
+				justWandered = false;
 				return false;
 			}
 			LOGGER.info("Should execute returned true");
@@ -222,6 +224,7 @@ public class HappyDolphinEntity extends AnimalEntity implements IFlyingAnimal {
 		 */
 		@Override
 		public void startExecuting() {
+			justWandered = false;
 			super.startExecuting();
 			setAIMoveSpeed(0.7f);
 			target = getRandomElement(findBlockPositionIn(entity.world,
@@ -251,6 +254,7 @@ public class HappyDolphinEntity extends AnimalEntity implements IFlyingAnimal {
 			notExecuting = true;
 			target = null;
 			isBusy = false;
+			justAte = true;
 		}
 
 		private boolean reachedTarget;
@@ -317,6 +321,7 @@ public class HappyDolphinEntity extends AnimalEntity implements IFlyingAnimal {
 	}
 
 	private boolean isBusy = false;
+	private boolean justWandered = false;
 
 	class WanderGoal extends Goal {
 
@@ -330,7 +335,7 @@ public class HappyDolphinEntity extends AnimalEntity implements IFlyingAnimal {
 		@Override
 		public boolean shouldExecute() {
 			LOGGER.info("Should execute wander returned " + (HappyDolphinEntity.this.getNavigator().noPath() && !isBusy));
-			return HappyDolphinEntity.this.getNavigator().noPath() && !isBusy;
+			return HappyDolphinEntity.this.getNavigator().noPath() && !isBusy && !justWandered;
 		}
 
 		@Override
@@ -343,6 +348,7 @@ public class HappyDolphinEntity extends AnimalEntity implements IFlyingAnimal {
 
 		@Override
 		public void startExecuting() {
+			justAte = false;
 			LOGGER.info("Starting wander goal");
 			super.startExecuting();
 			tmp_set = findBlockPositionIn(world,
@@ -387,6 +393,7 @@ public class HappyDolphinEntity extends AnimalEntity implements IFlyingAnimal {
 			inProgress = false;
 			HappyDolphinEntity.this.getNavigator().clearPath();
 			isBusy = false;
+			justWandered = true;
 		}
 	}
 }
