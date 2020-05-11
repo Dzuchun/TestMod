@@ -63,6 +63,7 @@ import dzuchun.minecraft.testmod.client.render.entity.BarkingBuckerRenderer;
 import dzuchun.minecraft.testmod.client.render.entity.HappyDolphinEntityRenderer;
 import dzuchun.minecraft.testmod.client.render.entity.ProfessorRenderer;
 import dzuchun.minecraft.testmod.client.render.tileentity.AnimationBlockEntityRenderer;
+//import dzuchun.minecraft.testmod.common.capability.CapabilityWings;
 import dzuchun.minecraft.testmod.config.ConfigHolder;
 import dzuchun.minecraft.testmod.container.TestContainer;
 import dzuchun.minecraft.testmod.entity.passive.BarkingBucketEntity;
@@ -308,6 +309,9 @@ public class TestMod {
 		DeferredWorkQueue.runLater(() -> setupWorldGen());
 
 		TestModPacketHandler.init();
+		
+		//Registering capability
+//		CapabilityWings.register();
 	}
 
 	@SubscribeEvent

@@ -11,6 +11,7 @@ import dzuchun.minecraft.testmod.client.gui.overlay.ManaBarRenderer;
 import dzuchun.minecraft.testmod.net.LeapMessage;
 import dzuchun.minecraft.testmod.net.SmashMessage;
 import dzuchun.minecraft.testmod.net.TestModPacketHandler;
+//import dzuchun.minecraft.testmod.net.WingsMessage;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.settings.KeyBinding;
@@ -33,7 +34,7 @@ public class KeyEvents {
 	private static final Logger LOGGER = LogManager.getLogger();
 
 	private static enum KeyName {
-		SUMMON_WINGS, MODIFY_MAX_MANA, MODIFY_CURRENT_MANA, LEAP, SMASH
+		SUMMON_WINGS, MODIFY_MAX_MANA, MODIFY_CURRENT_MANA, LEAP, SMASH, TOGGLE_WINGS
 	}
 
 	private static final LinkedHashMap<KeyName, KeyBinding> keyBindings = new LinkedHashMap<KeyName, KeyBinding>() {
@@ -55,6 +56,10 @@ public class KeyEvents {
 			
 			this.put(KeyName.SMASH,
 					new KeyBinding("key.testmod.smash", KeyConflictContext.IN_GAME, KeyModifier.NONE,
+							InputMappings.Type.KEYSYM.getOrMakeInput(KeyEvent.VK_Z), "Test Mod"));
+			
+			this.put(KeyName.TOGGLE_WINGS,
+					new KeyBinding("key.testmod.toggle_wings", KeyConflictContext.IN_GAME, KeyModifier.NONE,
 							InputMappings.Type.KEYSYM.getOrMakeInput(KeyEvent.VK_Z), "Test Mod"));
 		}
 	};
@@ -114,5 +119,11 @@ public class KeyEvents {
 					.setStyle(new Style().setColor(TextFormatting.RED).setBold(true)), true);
 			TestModPacketHandler.INSTANCE.sendToServer(SmashMessage.create(Minecraft.getInstance().player.getForward(), 1d, 2d));
 		}
+//		
+//		if (keyBindings.get(KeyName.TOGGLE_WINGS).isPressed()) {
+//			Minecraft.getInstance().player.sendStatusMessage(new TranslationTextComponent("wings.toggle_wings")
+//					.setStyle(new Style().setColor(TextFormatting.DARK_GREEN).setBold(true)), true);
+//			TestModPacketHandler.INSTANCE.sendToServer(WingsMessage.create(Minecraft.getInstance().player.getName().getString(), false, true));
+//		}
 	}
 }

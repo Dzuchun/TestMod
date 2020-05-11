@@ -31,7 +31,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 
-@Mod.EventBusSubscriber(modid = TestMod.MODID, bus = Bus.FORGE)
+//@Mod.EventBusSubscriber(modid = TestMod.MODID, bus = Bus.FORGE)
 public class WingsRenderer {
 
 	private static final Logger LOGGER = LogManager.getLogger();

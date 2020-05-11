@@ -3,6 +3,9 @@ package dzuchun.minecraft.testmod.net;
 import java.util.Optional;
 import java.util.function.Supplier;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import dzuchun.minecraft.testmod.TestMod;
 import dzuchun.minecraft.testmod.server.SmashLogic;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -13,6 +16,7 @@ import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
 
 public class TestModPacketHandler {
+	private static final Logger LOGGER = LogManager.getLogger();
 	public static final String PROTOCOL_VERSION = "1";
 	public static final SimpleChannel INSTANCE = NetworkRegistry.newSimpleChannel(
 			new ResourceLocation(TestMod.MODID, "main"), () -> PROTOCOL_VERSION, PROTOCOL_VERSION::equals,
@@ -21,6 +25,7 @@ public class TestModPacketHandler {
 	public static void init() {
 		INSTANCE.registerMessage(47, LeapMessage.class, LeapMessage::encode, LeapMessage::decode,
 				TestModPacketHandler::leapMessageHandler, Optional.of(NetworkDirection.PLAY_TO_SERVER));
+
 		INSTANCE.registerMessage(49, SmashMessage.class, SmashMessage::encode, SmashMessage::decode,
 				TestModPacketHandler::smashMessageHandler, Optional.of(NetworkDirection.PLAY_TO_SERVER));
 	}
