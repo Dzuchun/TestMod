@@ -11,6 +11,7 @@ import dzuchun.minecraft.testmod.client.gui.overlay.ManaBarRenderer;
 import dzuchun.minecraft.testmod.net.LeapMessage;
 import dzuchun.minecraft.testmod.net.SmashMessage;
 import dzuchun.minecraft.testmod.net.TestModPacketHandler;
+import dzuchun.minecraft.testmod.wings.net.ClientWingsMessage;
 //import dzuchun.minecraft.testmod.net.WingsMessage;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
@@ -34,7 +35,7 @@ public class KeyEvents {
 	private static final Logger LOGGER = LogManager.getLogger();
 
 	private static enum KeyName {
-		SUMMON_WINGS, MODIFY_MAX_MANA, MODIFY_CURRENT_MANA, LEAP, SMASH, TOGGLE_WINGS
+		SUMMON_WINGS, MODIFY_MAX_MANA, MODIFY_CURRENT_MANA, LEAP, SMASH, TOGGLE_WINGS, ENABLE_WINGS, DISABLE_WINGS
 	}
 
 	private static final LinkedHashMap<KeyName, KeyBinding> keyBindings = new LinkedHashMap<KeyName, KeyBinding>() {
@@ -42,25 +43,26 @@ public class KeyEvents {
 		{
 			this.put(KeyName.SUMMON_WINGS, new KeyBinding("key.testmod.summon_wings", KeyConflictContext.IN_GAME,
 					KeyModifier.NONE, InputMappings.Type.KEYSYM.getOrMakeInput(KeyEvent.VK_F), "Test Mod"));
-			
+
 			this.put(KeyName.MODIFY_MAX_MANA, new KeyBinding("key.testmod.modify_max_mana", KeyConflictContext.IN_GAME,
 					KeyModifier.NONE, InputMappings.Type.KEYSYM.getOrMakeInput(KeyEvent.VK_PLUS), "Test Mod"));
-			
+
 			this.put(KeyName.MODIFY_CURRENT_MANA,
 					new KeyBinding("key.testmod.modify_current_mana", KeyConflictContext.IN_GAME, KeyModifier.NONE,
 							InputMappings.Type.KEYSYM.getOrMakeInput(KeyEvent.VK_SUBTRACT), "Test Mod"));
+
+			this.put(KeyName.LEAP, new KeyBinding("key.testmod.leap", KeyConflictContext.IN_GAME, KeyModifier.NONE,
+					InputMappings.Type.KEYSYM.getOrMakeInput(KeyEvent.VK_Z), "Test Mod"));
+
+			this.put(KeyName.SMASH, new KeyBinding("key.testmod.smash", KeyConflictContext.IN_GAME, KeyModifier.NONE,
+					InputMappings.Type.KEYSYM.getOrMakeInput(KeyEvent.VK_Z), "Test Mod"));
+
 			
-			this.put(KeyName.LEAP,
-					new KeyBinding("key.testmod.leap", KeyConflictContext.IN_GAME, KeyModifier.NONE,
-							InputMappings.Type.KEYSYM.getOrMakeInput(KeyEvent.VK_Z), "Test Mod"));
+			this.put(KeyName.ENABLE_WINGS, new KeyBinding("key.testmod.toggle_wings", KeyConflictContext.IN_GAME,
+					KeyModifier.NONE, InputMappings.Type.KEYSYM.getOrMakeInput(KeyEvent.VK_Z), "Test Mod"));
 			
-			this.put(KeyName.SMASH,
-					new KeyBinding("key.testmod.smash", KeyConflictContext.IN_GAME, KeyModifier.NONE,
-							InputMappings.Type.KEYSYM.getOrMakeInput(KeyEvent.VK_Z), "Test Mod"));
-			
-			this.put(KeyName.TOGGLE_WINGS,
-					new KeyBinding("key.testmod.toggle_wings", KeyConflictContext.IN_GAME, KeyModifier.NONE,
-							InputMappings.Type.KEYSYM.getOrMakeInput(KeyEvent.VK_Z), "Test Mod"));
+			this.put(KeyName.DISABLE_WINGS, new KeyBinding("1", KeyConflictContext.IN_GAME,
+					KeyModifier.NONE, InputMappings.Type.KEYSYM.getOrMakeInput(KeyEvent.VK_Z), "Test Mod"));
 		}
 	};
 
@@ -77,20 +79,32 @@ public class KeyEvents {
 			Minecraft.getInstance().player.sendStatusMessage(new TranslationTextComponent("wings.summoned")
 					.setStyle(new Style().setColor(TextFormatting.DARK_PURPLE).setBold(true)), true);
 		}
-		
+
 		if (keyBindings.get(KeyName.MODIFY_MAX_MANA).isPressed()) {
 			if (!Screen.hasAltDown()) {
 //				Minecraft.getInstance().player.sendStatusMessage(new TranslationTextComponent("wings.mana")
 //						.setStyle(new Style().setColor(TextFormatting.DARK_PURPLE).setBold(true)), true);
 				LOGGER.info("Adding max mana");
 				ManaBarRenderer.addMaxMana(1);
-				Minecraft.getInstance().player.sendStatusMessage(new TranslationTextComponent("wings.mana").appendText(ManaBarRenderer.getCurrentMana() + "/" + ManaBarRenderer.getMaxMana())
-						.setStyle(new Style().setColor(TextFormatting.DARK_AQUA).setBold(true)), true);
+				Minecraft
+						.getInstance().player
+								.sendStatusMessage(
+										new TranslationTextComponent("wings.mana")
+												.appendText(ManaBarRenderer.getCurrentMana() + "/"
+														+ ManaBarRenderer.getMaxMana())
+												.setStyle(new Style().setColor(TextFormatting.DARK_AQUA).setBold(true)),
+										true);
 			} else {
 				LOGGER.info("Substracting max mana");
 				ManaBarRenderer.addMaxMana(-1);
-				Minecraft.getInstance().player.sendStatusMessage(new TranslationTextComponent("wings.mana").appendText(ManaBarRenderer.getCurrentMana() + "/" + ManaBarRenderer.getMaxMana())
-						.setStyle(new Style().setColor(TextFormatting.DARK_AQUA).setBold(true)), true);
+				Minecraft
+						.getInstance().player
+								.sendStatusMessage(
+										new TranslationTextComponent("wings.mana")
+												.appendText(ManaBarRenderer.getCurrentMana() + "/"
+														+ ManaBarRenderer.getMaxMana())
+												.setStyle(new Style().setColor(TextFormatting.DARK_AQUA).setBold(true)),
+										true);
 			}
 		}
 
@@ -98,32 +112,53 @@ public class KeyEvents {
 			if (!Screen.hasAltDown()) {
 				LOGGER.info("Adding current mana");
 				ManaBarRenderer.addCurrentMana(1);
-				Minecraft.getInstance().player.sendStatusMessage(new TranslationTextComponent("wings.mana").appendText(ManaBarRenderer.getCurrentMana() + "/" + ManaBarRenderer.getMaxMana())
-						.setStyle(new Style().setColor(TextFormatting.DARK_AQUA).setBold(true)), true);
+				Minecraft
+						.getInstance().player
+								.sendStatusMessage(
+										new TranslationTextComponent("wings.mana")
+												.appendText(ManaBarRenderer.getCurrentMana() + "/"
+														+ ManaBarRenderer.getMaxMana())
+												.setStyle(new Style().setColor(TextFormatting.DARK_AQUA).setBold(true)),
+										true);
 			} else {
 				LOGGER.info("Substracting current mana");
 				ManaBarRenderer.addCurrentMana(-1);
-				Minecraft.getInstance().player.sendStatusMessage(new TranslationTextComponent("wings.mana").appendText(ManaBarRenderer.getCurrentMana() + "/" + ManaBarRenderer.getMaxMana())
-						.setStyle(new Style().setColor(TextFormatting.DARK_AQUA).setBold(true)), true);
+				Minecraft
+						.getInstance().player
+								.sendStatusMessage(
+										new TranslationTextComponent("wings.mana")
+												.appendText(ManaBarRenderer.getCurrentMana() + "/"
+														+ ManaBarRenderer.getMaxMana())
+												.setStyle(new Style().setColor(TextFormatting.DARK_AQUA).setBold(true)),
+										true);
 			}
 		}
-		
+
 		if (keyBindings.get(KeyName.LEAP).isPressed()) {
 			Minecraft.getInstance().player.sendStatusMessage(new TranslationTextComponent("wings.leap")
 					.setStyle(new Style().setColor(TextFormatting.GOLD).setBold(true)), true);
 			TestModPacketHandler.INSTANCE.sendToServer(new LeapMessage(0f, 0.2f, 0f));
 		}
-		
+
 		if (keyBindings.get(KeyName.SMASH).isPressed()) {
 			Minecraft.getInstance().player.sendStatusMessage(new TranslationTextComponent("wings.smash")
 					.setStyle(new Style().setColor(TextFormatting.RED).setBold(true)), true);
-			TestModPacketHandler.INSTANCE.sendToServer(SmashMessage.create(Minecraft.getInstance().player.getForward(), 1d, 2d));
+			TestModPacketHandler.INSTANCE
+					.sendToServer(SmashMessage.create(Minecraft.getInstance().player.getForward(), 1d, 2d));
 		}
-//		
-//		if (keyBindings.get(KeyName.TOGGLE_WINGS).isPressed()) {
-//			Minecraft.getInstance().player.sendStatusMessage(new TranslationTextComponent("wings.toggle_wings")
-//					.setStyle(new Style().setColor(TextFormatting.DARK_GREEN).setBold(true)), true);
-//			TestModPacketHandler.INSTANCE.sendToServer(WingsMessage.create(Minecraft.getInstance().player.getName().getString(), false, true));
-//		}
+
+		if (keyBindings.get(KeyName.ENABLE_WINGS).isPressed()) {
+			Minecraft.getInstance().player.sendStatusMessage(new TranslationTextComponent("wings.toggle_wings")
+					.setStyle(new Style().setColor(TextFormatting.DARK_GREEN).setBold(true)), true);
+			TestModPacketHandler.INSTANCE
+					.sendToServer(new ClientWingsMessage(Minecraft.getInstance().player.getUniqueID()).setEnabled(true));
+		}
+
+		if (keyBindings.get(KeyName.DISABLE_WINGS).isPressed()) {
+			Minecraft.getInstance().player.sendStatusMessage(new TranslationTextComponent("wings.toggle_wings")
+					.setStyle(new Style().setColor(TextFormatting.DARK_GREEN).setBold(true)), true);
+			TestModPacketHandler.INSTANCE
+					.sendToServer(new ClientWingsMessage(Minecraft.getInstance().player.getUniqueID()).setEnabled(false));
+		}
 	}
 }

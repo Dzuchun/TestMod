@@ -1,6 +1,7 @@
 package dzuchun.minecraft.testmod;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.entity.EntityClassification;
@@ -43,6 +44,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -63,7 +65,6 @@ import dzuchun.minecraft.testmod.client.render.entity.BarkingBuckerRenderer;
 import dzuchun.minecraft.testmod.client.render.entity.HappyDolphinEntityRenderer;
 import dzuchun.minecraft.testmod.client.render.entity.ProfessorRenderer;
 import dzuchun.minecraft.testmod.client.render.tileentity.AnimationBlockEntityRenderer;
-//import dzuchun.minecraft.testmod.common.capability.CapabilityWings;
 import dzuchun.minecraft.testmod.config.ConfigHolder;
 import dzuchun.minecraft.testmod.container.TestContainer;
 import dzuchun.minecraft.testmod.entity.passive.BarkingBucketEntity;
@@ -74,6 +75,8 @@ import dzuchun.minecraft.testmod.net.TestModPacketHandler;
 import dzuchun.minecraft.testmod.server.SmashLogic;
 import dzuchun.minecraft.testmod.tileentity.AnimationBlockEntity;
 import dzuchun.minecraft.testmod.tileentity.TestTileEntity;
+import dzuchun.minecraft.testmod.wings.capability.CapabilityWings;
+import dzuchun.minecraft.testmod.wings.capability.WingsProvider;
 import dzuchun.minecraft.testmod.world.dimension.TestModDimension;
 import dzuchun.minecraft.testmod.world.gen.feachure.structure.TestStructure;
 import dzuchun.minecraft.testmod.world.gen.feachure.structure.TestStructurePiece;
@@ -280,6 +283,9 @@ public class TestMod {
 		BIOMES.register(modEventBus);
 		LOGGER.info("Trying to register dimensions");
 		DIMENSIONS.register(modEventBus);
+		
+
+//		Minecraft.getInstance().player.world.getPlayerByUuid(Minecraft.getInstance().player.getGameProfile().getId()).getCapability(null);
 	}
 
 	@SubscribeEvent
@@ -311,7 +317,8 @@ public class TestMod {
 		TestModPacketHandler.init();
 		
 		//Registering capability
-//		CapabilityWings.register();
+		CapabilityWings.register();
+		WingsProvider.init();
 	}
 
 	@SubscribeEvent
@@ -330,6 +337,8 @@ public class TestMod {
 			event.addSprite(BUCKET_FRONT);
 			event.addSprite(BUCKET_SIDE);
 			event.addSprite(BUCKET_TEARS);
+			
+			
 			LOGGER.info("Adding manabar sprite");
 			event.addSprite(MANA_BAR);
 

@@ -1,7 +1,11 @@
 package dzuchun.minecraft.testmod.net;
 
+import java.util.function.Supplier;
+
+import dzuchun.minecraft.testmod.server.SmashLogic;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.math.Vec3d;
+import net.minecraftforge.fml.network.NetworkEvent;
 
 public class SmashMessage {
 
@@ -41,5 +45,10 @@ public class SmashMessage {
 
 	public double getMaxDistance() {
 		return maxDistance;
+	}
+
+	public static void smashMessageHandler(SmashMessage m, Supplier<NetworkEvent.Context> c) {
+		SmashLogic.addSmashEvent(c.get().getSender(), m);
+		c.get().setPacketHandled(true);
 	}
 }

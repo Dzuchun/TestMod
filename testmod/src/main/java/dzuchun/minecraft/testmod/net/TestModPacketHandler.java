@@ -7,7 +7,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import dzuchun.minecraft.testmod.TestMod;
-import dzuchun.minecraft.testmod.server.SmashLogic;
+import dzuchun.minecraft.testmod.wings.net.ClientWingsMessage;
+import dzuchun.minecraft.testmod.wings.net.ServerWingsMessage;
+import dzuchun.minecraft.testmod.wings.net.WingsMessage;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.network.NetworkDirection;
@@ -27,7 +29,15 @@ public class TestModPacketHandler {
 				TestModPacketHandler::leapMessageHandler, Optional.of(NetworkDirection.PLAY_TO_SERVER));
 
 		INSTANCE.registerMessage(49, SmashMessage.class, SmashMessage::encode, SmashMessage::decode,
-				TestModPacketHandler::smashMessageHandler, Optional.of(NetworkDirection.PLAY_TO_SERVER));
+				SmashMessage::smashMessageHandler, Optional.of(NetworkDirection.PLAY_TO_SERVER));
+
+		//Channel for client requests to server for changing capability
+		INSTANCE.registerMessage(51, ClientWingsMessage.class, WingsMessage::encode, ClientWingsMessage::new,
+				WingsMessage::handler);
+
+		//Channel for server to signal capability change 
+		INSTANCE.registerMessage(52, ServerWingsMessage.class, WingsMessage::encode, ServerWingsMessage::new,
+				WingsMessage::handler);
 	}
 
 	public static void leapMessageHandler(LeapMessage msg, Supplier<NetworkEvent.Context> ctx) {
@@ -39,10 +49,5 @@ public class TestModPacketHandler {
 			sender.velocityChanged = true;
 		});
 		ctx.get().setPacketHandled(true);
-	}
-
-	static void smashMessageHandler(SmashMessage m, Supplier<NetworkEvent.Context> c) {
-		SmashLogic.addSmashEvent(c.get().getSender(), m);
-		c.get().setPacketHandled(true);
 	}
 }
