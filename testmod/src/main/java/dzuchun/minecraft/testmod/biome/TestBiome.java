@@ -4,6 +4,7 @@ import dzuchun.minecraft.testmod.TestMod;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityClassification;
+import net.minecraft.entity.EntityType;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;
@@ -73,6 +74,8 @@ public class TestBiome extends Biome {
 //		this.addStructure(Feature.VILLAGE.withConfiguration(new VillageConfig("village/test/town_centers", 6)));
 
 		this.addSpawn(EntityClassification.CREATURE, new SpawnListEntry(TestMod.BARKING_BUCKET_ENTITY_TYPE, 20, 0, 5));
+		
+		this.addSpawn(EntityClassification.CREATURE, new SpawnListEntry(EntityType.CHICKEN, 20, 0, 5));
 
 //	    this.addSpawn(EntityClassification.CREATURE, new SpawnListEntry(EntityType.SHEEP, 12, 4, 4));
 //	    this.addSpawn(EntityClassification.CREATURE, new SpawnListEntry(EntityType.PIG, 10, 4, 4));
